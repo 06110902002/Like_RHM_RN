@@ -19,6 +19,14 @@ import {
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 import DefaultTabBar from './DefaultTabBar';
+//import TabSegment from './TabSegment';
+
+/**
+ * Created by 刘胡来
+ * Date on 2019.04.02
+ * Copyright 2013 - 2019 QianTuo Inc. All Rights Reserved
+ * Desc: 滑动选项卡
+ */
 export default class ScrollableTab extends Component {
     static propTypes = {}
     // 构造

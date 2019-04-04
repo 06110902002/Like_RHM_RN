@@ -1,6 +1,4 @@
-/**
- * 滑动选项卡的选项
- */
+
 import React, {
     Component,
 } from 'react';
@@ -11,13 +9,19 @@ import {
     TouchableOpacity,
     Dimensions,
     Animated,
+    ScrollView,
 } from 'react-native';
 import PropTypes from 'prop-types';
 const screenW = Dimensions.get('window').width;
 const screenH = Dimensions.get('window').height;
 
-
-export default class DefaultTabBar extends Component {
+/**
+ * Created by 刘胡来
+ * Date on 2019/4/4
+ * Copyright 2013 - 2019 QianTuo Inc. All Rights Reserved
+ * Desc: 滑动选项卡
+ */
+export default class TabSegment extends Component {
     static propTypes = {
         tabs: PropTypes.array,
         activeTab: PropTypes.number,//当前选中的tab
@@ -47,11 +51,14 @@ export default class DefaultTabBar extends Component {
         return (
             <View style={[styles.container, this.props.style]}>
 
-                {/*文本*/}
-                {this.props.tabs.map((name, page) => {
-                    const isTabActive = this.props.activeTab === page;
-                    return this._renderTab(name, page, isTabActive);
-                })}
+                <ScrollView style = {{width:screenW,backgroundColor:'#b79805'}} horizontal={true}>
+                    {/*文本*/}
+                    {this.props.tabs.map((name, page) => {
+                        const isTabActive = this.props.activeTab === page;
+                        return this._renderTab(name, page, isTabActive);
+                    })}
+                </ScrollView>
+
 
                 {/*指示线*/}
                 <Animated.View
@@ -100,6 +107,7 @@ const styles = StyleSheet.create({
         height: 50,
     },
     tabStyle: {
+        width:screenW / 3,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',

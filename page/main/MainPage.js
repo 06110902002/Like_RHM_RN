@@ -13,7 +13,38 @@ export default class MainPage extends React.Component{
 
     constructor(props) {
         super(props);
+        this.topMenuTitleModelList = [];
+        var tradeItem = new TopMenuTitleModel();
+        tradeItem.firstTxt = '今日交易金额';
+        tradeItem.secTxt = '0.00元';
+        tradeItem.thirdTxt = '0.00元';
+        tradeItem.fourTxt = '昨日交易金额';
 
+        var fr = new TopMenuTitleModel();
+        fr.firstTxt = '今日分润';
+        fr.secTxt = '0.00元';
+        fr.thirdTxt = '0.00元';
+        fr.fourTxt = '昨日分润';
+
+        var jihuo = new TopMenuTitleModel();
+        jihuo.firstTxt = '今日激活终端';
+        jihuo.secTxt = '0.00元';
+        jihuo.thirdTxt = '0.00元';
+        jihuo.fourTxt = '昨日激活终端';
+
+        var cashBackItem = new TopMenuTitleModel();
+        cashBackItem.firstTxt = '今日激活返现';
+        cashBackItem.secTxt = '0.00元';
+        cashBackItem.thirdTxt = '0.00元';
+        cashBackItem.fourTxt = '昨日激活返现';
+        this.topMenuTitleModelList.push(tradeItem);
+        this.topMenuTitleModelList.push(fr);
+        this.topMenuTitleModelList.push(jihuo);
+        this.topMenuTitleModelList.push(cashBackItem);
+
+
+
+        this.segmentArray = ['交易金额','分润','激活终端数','激活返现'];
         /**
          * 通过状态去传递属性
          *
@@ -32,7 +63,7 @@ export default class MainPage extends React.Component{
 
                     <View style = {{width:50}}/>
 
-                    <Text style={styles.topTitleTxtStyle}>瑞花宝-瑞花蜜</Text>
+                    <Text style={{color:'white',fontSize:16}}>瑞花宝-瑞花蜜</Text>
 
                     <TouchableOpacity  style = {{width:50,height:50,
                         alignItems: 'center', backgroundColor:'#121e67',
@@ -47,22 +78,22 @@ export default class MainPage extends React.Component{
                 </View>
 
                 {/*顶部滑动选项卡*/}
-                <View >
+                <View style = {{top:40}}>
                     <ScrollView
                         contentContainerStyle={styles.contentContainer}
                         bounces={false}
                         pagingEnabled={true}
                         showsHorizontalScrollIndicator={false}
-                        onMomentumScrollEnd={(e)=>this.onAnimationEnd(e)}
+                        //onMomentumScrollEnd={(e)=>this.onAnimationEnd(e)}
                         //onTouchMove={(e) =>this.onTouchMove(e)}
                         horizontal={true}>
-                        {this.buildTradeView()}
-                        {this.buildTradeView()}
-                        {this.buildTradeView()}
+
+
+                        {this.topMenuTitleModelList.map((item, index)=> {
+                            return this.buidlScrollItemView(item,index);
+                        })}
 
                     </ScrollView>
-
-                    <View ref = 'indexLine' style={{backgroundColor:'#239090',height:10}} />
 
                 </View>
 
@@ -84,41 +115,37 @@ export default class MainPage extends React.Component{
     };
 
     /**
-     * 创建交易item视图
-     * @param count
+     * 构建scrolView item视图
+     * @param TopMenuTitleModel
+     * @param index 循环遍历的时候唯一key
      */
-    buildTradeView(){
-
-        return (
-            <View style = {styles.scrollVerticalLayout}>
-                <Text style={styles.topTitleTxtStyle}>今日交易金额</Text>
-            </View>
-        );
-
+    buidlScrollItemView(topMenuTitleModel,index){
+        if(topMenuTitleModel){
+            return (
+                <View style = {styles.scrollVerticalLayout} key={topMenuTitleModel.firstTxt + index}>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:12}]}>{topMenuTitleModel.firstTxt}</Text>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:16}]}>{topMenuTitleModel.secTxt}</Text>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:14}]}>{topMenuTitleModel.thirdTxt}</Text>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:12}]}>{topMenuTitleModel.fourTxt}</Text>
+                </View>
+            );
+        }
+        return null;
     };
 
-    // 当一帧滚动结束的时候调用
-    onAnimationEnd(e){
-        // 1.求出水平方向的偏移量
-        var offsetX = e.nativeEvent.contentOffset.x;
-        // 2.求出当前的页数         floor函数 取整
-        var currentPage = Math.floor(offsetX / screenWidth);
 
-        // 3.更新状态机
-        this.setState({
-            // 当前页
-            currentPage: currentPage
-        })
 
-        this.refs.accountHistoryListView.setNativeProps({
-            style:{
-                height:isShowAccountHistory? this.state.dataArray.length * 50:0,
-            }
-        });
+}
 
+class TopMenuTitleModel {
+
+    constructor(){
+
+        this.firstTxt = '';
+        this.secTxt = '';
+        this.thirdTxt = '';
+        this.fourTxt = '';
     }
-
-
 
 }
 
@@ -139,23 +166,41 @@ const styles = StyleSheet.create({
 
     },
     topTitleTxtStyle:{
-        flex:1,
-        fontSize:16,
+        //flex:1,
         color:'white',
-        textAlign:'center',
-        //backgroundColor:'#8b3e67',
+        //textAlign:'center',
+        height:40,
+        backgroundColor:'#8b3e67',
+        //alignItems:'center',    //垂直居中
+        alignItems:'center',
+        justifyContent: 'center',
         //position:'absolute'
     },
 
     scrollVerticalLayout:{
         width: screenWidth,
-        top:40,
+        //top:40,
         height:200,
         flexDirection:'column',
         alignItems:'center',    //垂直居中
         justifyContent:'center',
         backgroundColor:'#123e67',
     },
+
+
+
+
+    newTextStyle:{
+        fontSize:30,
+    },
+    ViewForTextStyle:{
+        height:100,
+        width:200,
+        alignItems:'center',
+        justifyContent: 'center',
+        backgroundColor:'gray',
+        margin:5
+    }
 
 
 });
