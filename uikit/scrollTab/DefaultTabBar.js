@@ -41,22 +41,22 @@ export default class DefaultTabBar extends Component {
         let tabStyle = {
             width: containerWidth / tabs.length,
             position: 'absolute',
-            bottom: 0,
+            //bottom: 0,
             left:left,
+            top:0,
         }
         return (
             <View style={[styles.container, this.props.style]}>
-
+                {/*指示线*/}
+                <Animated.View
+                    style={[styles.tabLineStyle, tabStyle]}
+                />
                 {/*文本*/}
                 {this.props.tabs.map((name, page) => {
                     const isTabActive = this.props.activeTab === page;
                     return this._renderTab(name, page, isTabActive);
                 })}
 
-                {/*指示线*/}
-                <Animated.View
-                    style={[styles.tabLineStyle, tabStyle]}
-                />
             </View>
         );
     }
@@ -73,7 +73,7 @@ export default class DefaultTabBar extends Component {
         //如果被选中的style
         if (isTabActive) {
             tabTextStyle = {
-                color: 'green'
+                color: 'white'
             };
         } else {
             tabTextStyle = {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         width: screenW,
         flexDirection: 'row',
         alignItems: 'center',
-        height: 50,
+        height: 40,
     },
     tabStyle: {
         flex: 1,

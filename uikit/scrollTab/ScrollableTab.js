@@ -47,10 +47,11 @@ export default class ScrollableTab extends Component {
                 style={styles.container}
                 onLayout={this._onLayout}
             >
-                {/*渲染tabview*/}
-                {this._renderTabView()}
                 {/*渲染主体内容*/}
                 {this._renderScrollableContent()}
+                {/*渲染tabview*/}
+                {this._renderTabView()}
+
             </View>
         );
     }
@@ -104,6 +105,7 @@ export default class ScrollableTab extends Component {
                 horizontal={true}
                 onMomentumScrollBegin={this._onMomentumScrollBeginAndEnd}
                 onMomentumScrollEnd={this._onMomentumScrollBeginAndEnd}
+                showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={15}
                 onScroll={Animated.event([{
                     nativeEvent: {contentOffset: {x: this.state.scrollXAnim}}
@@ -176,6 +178,6 @@ const styles = StyleSheet.create({
     container: {
         width: screenW,
         flex: 1,
-        marginTop: 22,
+        //marginTop: 22,
     },
 });

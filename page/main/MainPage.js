@@ -3,8 +3,8 @@ import {Button, View, Text, StyleSheet,
     Image,TextInput,ListView,ScrollView,Dimensions,
     TouchableOpacity} from 'react-native';
 import { Alert } from 'react-native'
+import ScrollableTab from '../../uikit/scrollTab/ScrollableTab';
 
-import {FlatList} from 'react-native';
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 
@@ -78,30 +78,14 @@ export default class MainPage extends React.Component{
                 </View>
 
                 {/*顶部滑动选项卡*/}
-                <View style = {{top:40}}>
-                    <ScrollView
-                        contentContainerStyle={styles.contentContainer}
-                        bounces={false}
-                        pagingEnabled={true}
-                        showsHorizontalScrollIndicator={false}
-                        //onMomentumScrollEnd={(e)=>this.onAnimationEnd(e)}
-                        //onTouchMove={(e) =>this.onTouchMove(e)}
-                        horizontal={true}>
-
-
-                        {this.topMenuTitleModelList.map((item, index)=> {
-                            return this.buidlScrollItemView(item,index);
+                <View style = {{top:40,height:200,backgroundColor:'#1980cb'}}>
+                    <ScrollableTab >
+                        {this.segmentArray.map((item, index)=> {
+                            return this.buidlScrollItemView(this.topMenuTitleModelList[index],index);
                         })}
-
-                    </ScrollView>
+                    </ScrollableTab>
 
                 </View>
-
-
-
-
-
-
 
             </View>
 
@@ -122,11 +106,11 @@ export default class MainPage extends React.Component{
     buidlScrollItemView(topMenuTitleModel,index){
         if(topMenuTitleModel){
             return (
-                <View style = {styles.scrollVerticalLayout} key={topMenuTitleModel.firstTxt + index}>
-                    <Text style={[styles.topTitleTxtStyle,{fontSize:12}]}>{topMenuTitleModel.firstTxt}</Text>
-                    <Text style={[styles.topTitleTxtStyle,{fontSize:16}]}>{topMenuTitleModel.secTxt}</Text>
-                    <Text style={[styles.topTitleTxtStyle,{fontSize:14}]}>{topMenuTitleModel.thirdTxt}</Text>
-                    <Text style={[styles.topTitleTxtStyle,{fontSize:12}]}>{topMenuTitleModel.fourTxt}</Text>
+                <View style = {styles.scrollVerticalLayout} key={topMenuTitleModel.firstTxt + index} tabLabel={topMenuTitleModel.firstTxt}>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:12}]} >{topMenuTitleModel.firstTxt}</Text>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:16}]} >{topMenuTitleModel.secTxt}</Text>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:14}]} >{topMenuTitleModel.thirdTxt}</Text>
+                    <Text style={[styles.topTitleTxtStyle,{fontSize:12}]} >{topMenuTitleModel.fourTxt}</Text>
                 </View>
             );
         }
@@ -170,7 +154,7 @@ const styles = StyleSheet.create({
         color:'white',
         //textAlign:'center',
         height:40,
-        backgroundColor:'#8b3e67',
+        //backgroundColor:'#8b3e67',
         //alignItems:'center',    //垂直居中
         alignItems:'center',
         justifyContent: 'center',
