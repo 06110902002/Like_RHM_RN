@@ -1,12 +1,17 @@
 import React from 'react';
 import {Button, View, Text, StyleSheet,
-    Image,TextInput,ListView,ScrollView,Dimensions,
+    Image,TextInput,ListView,ScrollView,Dimensions,StatusBar,
     TouchableOpacity} from 'react-native';
 import { Alert } from 'react-native'
 import ScrollableTab from '../../uikit/scrollTab/ScrollableTab';
+import RefreshListView from '../../refresh/RefreshListView';
+import MenuItem from '../../refresh/model/HomeMenuItemModel';
+import RefreshState from  '../../refresh/model/ModelType';
+import ItemViewMgr from '../../refresh/view/ItemViewMgr';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
+var testArray = [];
 
 export default class MainPage extends React.Component{
 
@@ -50,13 +55,46 @@ export default class MainPage extends React.Component{
          *
          * */
         this.state = {
+
+            //首页菜单项-属性
+            isLoading: true,
+            noMoreData:false,
+            dataArray: this.initMenuData(),
         }
     }
+
+    initMenuData(){
+
+        var txtArr = ['分润查询','交易查询','激活终端查询',
+            '开设下级机构','分润模版管事','终端下发',
+            '设置终端费率','分润明细','激活返现管理',
+        ];
+
+        var iconArr = [require('../../page/main/img/icon_01.png'),
+            require('../../page/main/img/icon_02.png'),
+            require('../../page/main/img/icon_03.png'),
+            require('../../page/main/img/icon_04.png'),
+            require('../../page/main/img/icon_05.png'),
+            require('../../page/main/img/icon_06.png'),
+            require('../../page/main/img/icon_07.png'),
+            require('../../page/main/img/icon_08.png'),
+            require('../../page/main/img/icon_09.png'),
+        ];
+
+        for(let i = 1 ; i < 10; i++){
+            var menuItem = new MenuItem();
+            menuItem.menuTxt = txtArr[i];
+            menuItem.menuIcon = iconArr[i];
+            testArray.push(menuItem);
+        }
+        return testArray;
+    };
 
     render(){
 
         return(
             <View style = {styles.container}>
+                {this.setStatusBar()}
 
                 {/*顶部标题栏*/}
                 <View style = {styles.topTitleStyle}>
@@ -66,7 +104,7 @@ export default class MainPage extends React.Component{
                     <Text style={{color:'white',fontSize:16}}>瑞花宝-瑞花蜜</Text>
 
                     <TouchableOpacity  style = {{width:50,height:50,
-                        alignItems: 'center', backgroundColor:'#121e67',
+                        alignItems: 'center',
 
                         justifyContent:'center'}} onPress={() => this.showNotifyMsg()}>
 
@@ -78,7 +116,7 @@ export default class MainPage extends React.Component{
                 </View>
 
                 {/*顶部滑动选项卡*/}
-                <View style = {{top:40,height:200,backgroundColor:'#1980cb'}}>
+                <View style = {{top:40,height:200}}>
                     <ScrollableTab >
                         {this.segmentArray.map((item, index)=> {
                             return this.buidlScrollItemView(this.topMenuTitleModelList[index],index);
@@ -87,11 +125,27 @@ export default class MainPage extends React.Component{
 
                 </View>
 
+                {this.buildFunctMenuList()}
             </View>
 
 
         );
 
+    };
+
+    /**
+     * 修改状态栏属性
+     * @returns {*}
+     */
+    setStatusBar(){
+        return (
+            <StatusBar
+            animated={true}
+            hidden={false}
+            //backgroundColor={this.state.MainColor} //状态栏的背景色
+            translucent={true}
+            barStyle='light-content'
+        />);
     };
 
     showNotifyMsg(){
@@ -117,6 +171,86 @@ export default class MainPage extends React.Component{
         return null;
     };
 
+    /**
+     * 构建菜单滚动列表
+     * @returns {*}
+     */
+    buildFunctMenuList(){
+
+        return(
+            <View style = {{flex:1,backgroundColor:'#F5F5F9',top:40}}>
+
+                <RefreshListView
+                    style = {{top:10}}
+                    ref={(ref) => {this.listView = ref}}
+                    data={this.state.dataArray}
+                    renderItem={this._renderItem.bind(this)}
+                    ListEmptyComponent={this._renderEmptyView}
+                    onHeaderRefresh={() => { this.pullDownRefresh() }}
+                    onFooterRefresh={() => { this.loadMore() }}
+                    ItemSeparatorComponent={this.renderSeparator}
+                />
+
+
+            </View>
+        );
+    };
+
+    _renderEmptyView = (item) => {
+        return <View/>
+    };
+
+    pullDownRefresh(){
+        this.setState({
+            isLoading: true,
+        },()=>{
+
+            setTimeout(() => {
+                this.listView.endRefreshing(RefreshState.Idle);
+                console.log('226-----------:下拉刷新');
+            }, 2000)
+
+        });
+    }
+
+    _renderItem= (data)=> {
+        return (
+            <ItemViewMgr
+                itemType = {data.item.getItemType()}
+                ItemData = {data.item}      //属性传值
+                onItemClickListener = {(itemData) =>this.onClickListener(itemData)}
+            />
+        )
+
+    };
+
+    onClickListener(itemData){
+        //Alert.alert(itemData.universityName);
+    };
+
+    /**
+     * 滚动列表
+     * @returns {*}
+     */
+    renderSeparator = () => {
+        return (
+            <View
+                style={{ height: 0.5, width: "100%", backgroundColor: "#CED0CE",}}
+            />
+        );
+    };
+
+
+
+    loadMore(){
+        setTimeout(() => {
+            this.setState({
+                noMoreData: true,
+            },()=>{
+                this.listView.endRefreshing(RefreshState.NoMoreData);
+            })
+        }, 20);
+    };
 
 
 }
@@ -137,13 +271,13 @@ const styles = StyleSheet.create({
 
     container: {
         flex:1,
-        backgroundColor:'#ddee67',
+        backgroundColor:'#1373EC',
     },
     topTitleStyle:{
         top:40,
         height:50,
         flexDirection:'row',
-        backgroundColor:'#12ee67',
+        //backgroundColor:'#12ee67',
         alignItems:'center',    //垂直居中
         justifyContent:'space-between',
 
@@ -168,7 +302,7 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         alignItems:'center',    //垂直居中
         justifyContent:'center',
-        backgroundColor:'#123e67',
+        //backgroundColor:'#123e67',
     },
 
 
@@ -184,7 +318,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor:'gray',
         margin:5
-    }
-
+    },
 
 });

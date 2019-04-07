@@ -73,11 +73,13 @@ export default class DefaultTabBar extends Component {
         //如果被选中的style
         if (isTabActive) {
             tabTextStyle = {
-                color: 'white'
+                color: 'white',
+                fontSize:14,
             };
         } else {
             tabTextStyle = {
-                color: 'red'
+                color: 'white',
+                fontSize:12
             };
         }
         let self = this;
@@ -106,6 +108,6 @@ const styles = StyleSheet.create({
     },
     tabLineStyle: {
         height: 2,
-        backgroundColor: 'navy',
+        backgroundColor: 'white',
     }
 });

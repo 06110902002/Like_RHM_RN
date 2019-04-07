@@ -24,6 +24,7 @@ export default class RefreshListView extends Component {
     return (
       <FlatList
         {...this.props}
+        numColumns = {3}
         onRefresh={()=>{ this.beginHeaderRefresh() }}
         keyExtractor={(item,index) => index +" "} //防止出现属性Each child in an array iterator should have a unique "key" prop
         refreshing={this.state.isHeaderRefreshing}
@@ -97,7 +98,7 @@ export default class RefreshListView extends Component {
    * 如果列表头部已经在刷新中了，就返回false
    */
   shouldStartHeaderRefreshing() {
-    if (this.state.footerState === RefreshState.refreshing ||
+    if (this.state.footerState === RefreshState.Refreshing ||
       this.state.isHeaderRefreshing ||
       this.state.isFooterRefreshing) {
       return false;

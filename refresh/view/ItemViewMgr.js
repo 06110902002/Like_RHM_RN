@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {
     View, Text, ActivityIndicator, Image,
-    StyleSheet, TouchableOpacity, Button, Alert
+    StyleSheet, TouchableOpacity, Button, Alert, Dimensions
 } from 'react-native';
 
 
 import TitleModel from '../model/TitleModel';
 import ModelType from "../model/ModelType";
 import PropTypes from 'prop-types';
+
+
+let screenWidth = Dimensions.get('window').width;
 
 /**
  * 单元格中视图的统一管理器
@@ -19,6 +22,7 @@ export default class ItemViewMgr extends Component<Props>{
 
     };
 
+
     render() {
         let{itemType,ItemData} = this.props;
         let itemView = null;
@@ -29,6 +33,10 @@ export default class ItemViewMgr extends Component<Props>{
 
             case ModelType.default:
                 itemView = this.buildDefaultView();
+                break;
+
+            case ModelType.HomeFuncMenu:
+                itemView = this.buildHomeFuncMenuView(ItemData);
                 break;
 
         }
@@ -50,6 +58,28 @@ export default class ItemViewMgr extends Component<Props>{
         return <View style={styles.container}>
             <Text  syle={styles.item}>{'3434'}</Text>
         </View>
+    };
+
+
+    /**
+     * 构建首页功能菜单
+     * @param  ItemData
+     */
+    buildHomeFuncMenuView(ItemData){
+        let icon = ItemData.menuIcon;//'../../page/main/img/icon_01.png';
+        return(
+            <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
+
+                <TouchableOpacity  style = {{width:50,height:50,
+                    alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick()}>
+                    <Image style = {{width:40,height:40}}
+                           source = {icon}/>
+                </TouchableOpacity>
+
+                <Text style={{fontSize:12,top:10}}>{ItemData.menuTxt}</Text>
+
+            </View>
+        );
     };
 
 
@@ -101,4 +131,13 @@ const styles = StyleSheet.create({
         elevation:5,//漂浮的效果
         borderRadius:5,//圆角
     },
+    menuItemStyle:{
+        height:100,
+        width:screenWidth / 3,
+        alignItems: 'center',
+        flexDirection:'column',
+        justifyContent:'center',
+        backgroundColor:'white',
+    },
+
 });
