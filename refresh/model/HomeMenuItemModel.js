@@ -12,8 +12,14 @@ export default class HomeMenuItemModel extends BaseModel{
 
     constructor(){
         super();
-        this.menuTxt = '菜单项-待定';
-        this.menuIcon = 'url';
+        this.menuTxt1 = '菜单项-待定';
+        this.menuIcon1 = 'url';
+
+        this.menuTxt2 = '菜单项-待定';
+        this.menuIcon2 = 'url';
+
+        this.menuTxt3 = '菜单项-待定';
+        this.menuIcon3 = 'url';
     };
 
     getItemType(){

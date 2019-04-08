@@ -39,6 +39,10 @@ export default class ItemViewMgr extends Component<Props>{
                 itemView = this.buildHomeFuncMenuView(ItemData);
                 break;
 
+            case ModelType.BannarMenu:
+                itemView = this.buildBannarMenu(ItemData);
+                break;
+
         }
         return itemView;
 
@@ -66,20 +70,73 @@ export default class ItemViewMgr extends Component<Props>{
      * @param  ItemData
      */
     buildHomeFuncMenuView(ItemData){
-        let icon = ItemData.menuIcon;//'../../page/main/img/icon_01.png';
+        let icon = ItemData.menuIcon1;//'../../page/main/img/icon_01.png';
+        console.log('74------------:'+icon);
         return(
-            <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
 
-                <TouchableOpacity  style = {{width:50,height:50,
-                    alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick()}>
-                    <Image style = {{width:40,height:40}}
-                           source = {icon}/>
+            <View style = {{flexDirection:'row',height:100,flex:1}}>
+
+                <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
+
+                    <TouchableOpacity  style = {{width:50,height:50,
+                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData)}>
+                        <Image style = {{width:40,height:40}}
+                               source = {icon}/>
+                    </TouchableOpacity>
+
+                    <Text style={{fontSize:12,top:10}}>{ItemData.menuTxt1}</Text>
+
+                </View>
+
+                <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
+
+                    <TouchableOpacity  style = {{width:50,height:50,
+                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData)}>
+                        <Image style = {{width:40,height:40}}
+                               source = {ItemData.menuIcon2}/>
+                    </TouchableOpacity>
+
+                    <Text style={{fontSize:12,top:10}}>{ItemData.menuTxt2}</Text>
+
+                </View>
+
+                <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
+
+                    <TouchableOpacity  style = {{width:50,height:50,
+                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData)}>
+                        <Image style = {{width:40,height:40}}
+                               source = {ItemData.menuIcon3}/>
+                    </TouchableOpacity>
+
+                    <Text style={{fontSize:12,top:10}}>{ItemData.menuTxt3}</Text>
+
+                </View>
+
+            </View>
+
+        );
+    };
+
+    /**
+     * bannar 视图
+     * @param ItemData
+     * @returns {*}
+     */
+    buildBannarMenu(ItemData){
+        return(
+            <View style = {{marginRight:0.5,marginLeft:0.5,flex:1}}>
+
+                <TouchableOpacity  style = {{flex:1,height:90,
+                    alignItems: 'center', justifyContent:'center'}} >
+                    <Image style = {{flex:1,height:70,resizeMode:'contain',}}
+                           source = {ItemData.bannarUrl}/>
                 </TouchableOpacity>
 
-                <Text style={{fontSize:12,top:10}}>{ItemData.menuTxt}</Text>
 
             </View>
         );
+
+
     };
 
 

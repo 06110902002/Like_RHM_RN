@@ -8,5 +8,6 @@ export default {
     Title: 'Title',
     University:'University',
     HomeFuncMenu:'HomeFuncMenu',        //首页功能菜单
+    BannarMenu:'BannarMenu',            //bannar 图
 
 }

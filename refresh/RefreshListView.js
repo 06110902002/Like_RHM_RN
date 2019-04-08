@@ -21,10 +21,10 @@ export default class RefreshListView extends Component {
   }
   
   render() {
+    let{rowIndex} = this.props;
     return (
       <FlatList
         {...this.props}
-        numColumns = {3}
         onRefresh={()=>{ this.beginHeaderRefresh() }}
         keyExtractor={(item,index) => index +" "} //防止出现属性Each child in an array iterator should have a unique "key" prop
         refreshing={this.state.isHeaderRefreshing}
@@ -116,8 +116,8 @@ export default class RefreshListView extends Component {
    * 如果列表数据为空，则返回false（初始状态下列表是空的，这时候肯定不需要上拉加载更多，而应该执行下拉刷新）
    */
   shouldStartFooterRefreshing() {
-    if (this.state.footerState === RefreshState.refreshing ||
-      this.state.footerState === RefreshState.NoMoreData ||
+    if (this.state.footerState === RefreshState.Refreshing ||
+      this.state.footerState === RefreshState.NoMoreData || this.state.footerState === RefreshState.Idle ||
       this.props.data.length === 0 ||
       this.state.isHeaderRefreshing ||
       this.state.isFooterRefreshing) {
