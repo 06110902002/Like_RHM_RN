@@ -2,6 +2,7 @@ import React from "react";
 import {Button, View, Text, StyleSheet,
     Image,TextInput,ListView,FlatList,Alert,
     TouchableOpacity} from 'react-native';
+import { NativeModules } from 'react-native';
 
 var testArray = [];
 const feedBack = 11;
@@ -10,6 +11,8 @@ const modifyPwd = 13;
 const versionInfo = 14;
 const pushSetting = 15;
 const logOut = 16;
+
+var RNCallNative = NativeModules.RNCallNative;
 
 export default class Mine extends React.Component{
 
@@ -183,7 +186,7 @@ export default class Mine extends React.Component{
                     width:'100%',height:40,backgroundColor:'white',marginTop:40,
                     textAlignVertical:'center',lineHeight:40,
                     textAlign:'center',alignItems:'center',justifyContent:'center'}}
-                      onPress = {()=> this.onClick(logOut)}>退出登录</Text>
+                      onPress = {()=> this.onClick(logOut)}>退出登录--调用原生方法</Text>
 
 
             </View>
@@ -193,6 +196,13 @@ export default class Mine extends React.Component{
 
     onClick(Id){
         Alert.alert('跳转页面：'+Id);
+        RNCallNative.addEvent('生日聚会', '江苏南通 中天路');
+        RNCallNative.RNTransferIOSWithCallBack('生日聚会',(data) => {
+            console.log('201-----------:'+data);
+            this.setState({notice: data});
+        });
+
+
         switch (Id){
 
             case feedBack:
