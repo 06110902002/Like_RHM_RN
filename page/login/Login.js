@@ -2,17 +2,20 @@ import React from 'react';
 import {
     Button, View, Text, StyleSheet,
     Image, TextInput, ListView,
-    TouchableOpacity
+    TouchableOpacity, NativeModules
 } from 'react-native';
 import {Alert} from 'react-native'
 
 import {FlatList} from 'react-native';
 import MicroHttp from '../../utils/MicroHttp';
+import DateUtils from "../../utils/DateUtils";
+
 
 const cellPhoneInputId = 23;
 const passwdInputId = 24;
 var isShowAccountHistory = false;
 var mobileList = [];
+var RNCallNative = NativeModules.RNCallNative;
 
 export default class Login extends React.Component {
 
@@ -254,29 +257,64 @@ export default class Login extends React.Component {
         //Alert.alert(this.state.cellPhoneText +":"+this.state.passwardText);
         //this.props.navigation.navigate('Main');
         let url = 'https://rhbapp.ruiyinxin.com:7024/unifiedAction.json';
-        let param = {
-            transDate: '20190409',
-            application: 'GetAgencyId.Req',
-            loginAppUserType: 'ruihuami_ruihuabao',
-            clientType: '04',
-            transTime: "201419",
-            dataRequestType: "JSON",
-            mobileSerialNum: "EECC4087BF3820F33B394D7AD652138B00000000",
-            userIP: "192.168.3.65",
-            appVersion: "V3",
-            customerId: "0000",
-            latitude: "31.215770",
-            version: "1.2.0",
-            sign: "3suw72wy25we2ref3su6er39nh5qmkaq",
-            mobileNo: "18751586817",
-            token: "0000",
-            longitude: "121.530926",
-            phone: "0000",
-            transLogNo: "000003",
-            appUser: "ruihuami",
-            osType: "iOS12.1.4"
-        };
-        let parmatTmp = 'requestXml=' + JSON.stringify(param);
+        // let param = {
+        //     transDate: '20190413',
+        //     application: 'GetAgencyId.Req',
+        //     loginAppUserType: 'ruihuami_ruihuabao',
+        //     clientType: '04',
+        //     transTime: "150512",
+        //     dataRequestType: "JSON",
+        //     mobileSerialNum: "EECC4087BF3820F33B394D7AD652138B00000000",
+        //     userIP: "192.168.3.65",
+        //     appVersion: "V3",
+        //     customerId: "0000",
+        //     latitude: "31.215770",
+        //     version: "1.2.0",
+        //     sign: MicroHttp.kIMPSignKey,
+        //     mobileNo: "18751586817",
+        //     token: "0000",
+        //     longitude: "121.530926",
+        //     phone: "0000",
+        //     transLogNo: "000003",
+        //     appUser: "ruihuami",
+        //     osType: "iOS12.1.4"
+        // };
+        let microHttp = new MicroHttp();
+        var param = microHttp.buildPublicRequestBody();
+        param.application = 'GetAgencyId.Req';
+        param.customerId = "0000";
+        param.mobileNo = '18751586817';
+        param.phone = "0000";
+        console.log('288----------;'+param.toString());
+
+        let dateAndTime = DateUtils.getDateAndTimes();
+        console.log('285---------date:'+dateAndTime[0]);
+
+        RNCallNative.getMd5FromNative(JSON.stringify(param),(newSign) => {
+            param.sign = newSign;
+
+            let parmatTmp = 'requestXml=' + JSON.stringify(param);
+
+            microHttp.postRequest(MicroHttp.jsonUrl, parmatTmp)
+                .then((response) => {
+
+                    if(response.respCode === '0000'){
+
+                    }else{
+                        Alert.alert(response.respDesc);
+                    }
+
+                    console.log('300----------:' + response.respDesc+" ："+response.respCode);
+
+                }).catch((error) => {
+                Alert.alert(error);
+            })
+        });
+
+
+        return;
+
+
 
 
         try {
@@ -297,7 +335,7 @@ export default class Login extends React.Component {
             let microHttp = new MicroHttp();
             microHttp.postRequest(MicroHttp.jsonUrl, parmatTmp)
                 .then((response) => {
-                    console.log('300----------:' + response.application);
+                    console.log('300----------:' + response.respDesc);
 
                 }).catch((error) => {
                     Alert.alert(error);

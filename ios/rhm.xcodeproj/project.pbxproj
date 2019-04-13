@@ -35,6 +35,9 @@
 		2DCD954D1E0B4F2C00145EB5 /* rhmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* rhmTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		6799B3EA71A843F8A708AFE9 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC07C974B9C24942883AB982 /* libRNGestureHandler.a */; };
+		6B29379C2261BB9300CAC9F6 /* MD5Str.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B29379B2261BB9300CAC9F6 /* MD5Str.m */; };
+		6B29379F2261BC2200CAC9F6 /* NSString+Md5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B29379E2261BC2200CAC9F6 /* NSString+Md5.m */; };
+		6B2937A22261BCB300CAC9F6 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2937A12261BCB300CAC9F6 /* NSString+URLEncoding.m */; };
 		6B329071225C2D0B00F6960E /* CashBackVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B329070225C2D0B00F6960E /* CashBackVCViewController.m */; };
 		6B329075225C475F00F6960E /* ImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B329074225C475F00F6960E /* ImageButton.m */; };
 		6B329078225C4BEC00F6960E /* ImageButtonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B329077225C4BEC00F6960E /* ImageButtonManager.m */; };
@@ -358,6 +361,12 @@
 		2D02E4901E0B4A5D006451C7 /* rhm-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rhm-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		6B29379A2261BB9300CAC9F6 /* MD5Str.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MD5Str.h; path = rhm/utils/MD5Str.h; sourceTree = "<group>"; };
+		6B29379B2261BB9300CAC9F6 /* MD5Str.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MD5Str.m; path = rhm/utils/MD5Str.m; sourceTree = "<group>"; };
+		6B29379D2261BC2200CAC9F6 /* NSString+Md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+Md5.h"; path = "rhm/utils/NSString+Md5.h"; sourceTree = "<group>"; };
+		6B29379E2261BC2200CAC9F6 /* NSString+Md5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+Md5.m"; path = "rhm/utils/NSString+Md5.m"; sourceTree = "<group>"; };
+		6B2937A02261BCB300CAC9F6 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+URLEncoding.h"; path = "rhm/utils/NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		6B2937A12261BCB300CAC9F6 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "NSString+URLEncoding.m"; path = "rhm/utils/NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		6B32906F225C2D0B00F6960E /* CashBackVCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CashBackVCViewController.h; path = rhm/vc/CashBackVCViewController.h; sourceTree = "<group>"; };
 		6B329070225C2D0B00F6960E /* CashBackVCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CashBackVCViewController.m; path = rhm/vc/CashBackVCViewController.m; sourceTree = "<group>"; };
 		6B329073225C475F00F6960E /* ImageButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageButton.h; path = rhm/view/ImageButton.h; sourceTree = "<group>"; };
@@ -517,6 +526,7 @@
 		13B07FAE1A68108700A75B9A /* rhm */ = {
 			isa = PBXGroup;
 			children = (
+				6B2937722261BB7B00CAC9F6 /* utils */,
 				6B329072225C46FA00F6960E /* view */,
 				6B329047225C2CE500F6960E /* vc */,
 				6B74B901225B7258009ABC9A /* uikit */,
@@ -570,6 +580,19 @@
 				5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6B2937722261BB7B00CAC9F6 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				6B29379A2261BB9300CAC9F6 /* MD5Str.h */,
+				6B29379B2261BB9300CAC9F6 /* MD5Str.m */,
+				6B29379D2261BC2200CAC9F6 /* NSString+Md5.h */,
+				6B29379E2261BC2200CAC9F6 /* NSString+Md5.m */,
+				6B2937A02261BCB300CAC9F6 /* NSString+URLEncoding.h */,
+				6B2937A12261BCB300CAC9F6 /* NSString+URLEncoding.m */,
+			);
+			name = utils;
 			sourceTree = "<group>";
 		};
 		6B329047225C2CE500F6960E /* vc */ = {
@@ -1221,12 +1244,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B2937A22261BCB300CAC9F6 /* NSString+URLEncoding.m in Sources */,
 				6B74B904225B72AE009ABC9A /* RNCallNative.m in Sources */,
 				6B329075225C475F00F6960E /* ImageButton.m in Sources */,
+				6B29379F2261BC2200CAC9F6 /* NSString+Md5.m in Sources */,
 				6B329071225C2D0B00F6960E /* CashBackVCViewController.m in Sources */,
 				6B329078225C4BEC00F6960E /* ImageButtonManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				6B29379C2261BB9300CAC9F6 /* MD5Str.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

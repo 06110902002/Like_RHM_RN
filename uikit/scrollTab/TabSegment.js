@@ -17,7 +17,7 @@ const screenH = Dimensions.get('window').height;
 
 /**
  * Created by 刘胡来
- * Date on 2019/4/4
+ * DateUtils on 2019/4/4
  * Copyright 2013 - 2019 QianTuo Inc. All Rights Reserved
  * Desc: 滑动选项卡
  */

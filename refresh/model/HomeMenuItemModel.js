@@ -3,7 +3,7 @@ import ModelType from "./ModelType";
 
 /**
  * Created by 刘胡来
- * Date on 2019.04.05
+ * DateUtils on 2019.04.05
  * Copyright 2013 - 2019 QianTuo Inc. All Rights Reserved
  * Desc: 首页菜单项
  */

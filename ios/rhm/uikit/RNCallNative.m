@@ -9,6 +9,7 @@
 #import "RNCallNative.h"
 #import "CashBackVCViewController.h"
 #import "AppDelegate.h"
+#import "MD5Str.h"
 
 #define TestNativeJsonData @"{\"callback1\":\"123\",\"callback2\":\"asd\"}"
 @implementation RNCallNative
@@ -26,6 +27,12 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
 RCT_EXPORT_METHOD(RNTransferIOSWithCallBack:(NSString *)jsString callBack:(RCTResponseSenderBlock)callback){
   NSLog(@"24----------调用了jsCallback函数 %@",jsString);
   callback(@[[NSString stringWithFormat:@"来自iOS Native的数据：%@",TestNativeJsonData]]);
+}
+
+RCT_EXPORT_METHOD(getMd5FromNative:(NSString *)jsString callBack:(RCTResponseSenderBlock)callback){
+  NSLog(@"32----------copy string from react:%@ ",jsString);
+  //[NSString stringWithFormat:@"来自iOS Native的数据：%@",[MD5Str getMd5Str:jsString]]
+  callback(@[[MD5Str getMd5Str:jsString]]);
 }
 
 RCT_EXPORT_METHOD(switchNative:(NSString*) reactParmas){

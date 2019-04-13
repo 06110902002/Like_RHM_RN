@@ -23,7 +23,7 @@ import DefaultTabBar from './DefaultTabBar';
 
 /**
  * Created by 刘胡来
- * Date on 2019.04.02
+ * DateUtils on 2019.04.02
  * Copyright 2013 - 2019 QianTuo Inc. All Rights Reserved
  * Desc: 滑动选项卡
  */
