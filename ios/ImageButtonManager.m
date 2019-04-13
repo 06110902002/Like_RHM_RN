@@ -21,9 +21,6 @@ RCT_EXPORT_VIEW_PROPERTY(onSingleTap, RCTBubblingEventBlock);
   photoView.delegate = self;
   //photoView.backgroundColor = [UIColor yellowColor];
   self.photoView = photoView;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    NSLog(@"24-----------%@:",[self.photoView imgUrl]);
-  });
   
   return photoView;
   
@@ -32,7 +29,6 @@ RCT_EXPORT_VIEW_PROPERTY(onSingleTap, RCTBubblingEventBlock);
 
 - (void)tabAction{
   //响应react 的点击事件
-  NSLog(@"32-----------%@:",self.photoView.imgUrl);
   self.photoView.onSingleTap(@{@"showBottom":@"0"});
 }
 

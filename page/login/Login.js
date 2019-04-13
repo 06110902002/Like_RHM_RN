@@ -241,7 +241,54 @@ export default class Login extends React.Component {
 
     login(){
         //Alert.alert(this.state.cellPhoneText +":"+this.state.passwardText);
-        this.props.navigation.navigate('Main');
+        //this.props.navigation.navigate('Main');
+        let url = 'https://rhbapp.ruiyinxin.com:7024/unifiedAction.json';
+        let param = {
+            transDate:'20190409',
+            application:'GetAgencyId.Req',
+            loginAppUserType:'ruihuami_ruihuabao',
+            clientType:'04',
+            transTime:"201419",
+            dataRequestType:"JSON",
+            mobileSerialNum:"EECC4087BF3820F33B394D7AD652138B00000000",
+            userIP:"192.168.3.65",
+            appVersion:"V3",
+            customerId:"0000",
+            latitude:"31.215770",
+            version:"1.2.0",
+            sign:"3suw72wy25we2ref3su6er39nh5qmkaq",
+            mobileNo:"18751586817",
+            token:"0000",
+            longitude:"121.530926",
+            phone:"0000",
+            transLogNo:"000003",
+            appUser:"ruihuami",
+            osType:"iOS12.1.4"
+        };
+        let parmatTmp = 'requestXml='+JSON.stringify(param);
+
+
+        try {
+            fetch(url, {
+                method: 'post',
+                body: parmatTmp,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            }).then(function(response) {
+                return response.json();
+            }).then((responseData) => {
+                console.log('278-----------：'+responseData.application);
+            })
+             .done();
+
+        } catch(e) {
+            //捕获异常消息
+            console.log('279----------:'+e);
+        }
+
+
     };
 
     register(){

@@ -14,6 +14,11 @@ export default class NativeComponent extends React.Component{
         imgUrl:PropTypes.string,
     };
 
+    componentWillMount(){
+        let{imgUrl} = this.props;
+
+    };
+
     render(){
         return <ImageButton{...this.props}/>
     }

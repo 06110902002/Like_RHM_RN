@@ -79,7 +79,7 @@ export default class ItemViewMgr extends Component<Props>{
                 <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
 
                     <TouchableOpacity  style = {{width:50,height:50,
-                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData)}>
+                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData.menuTxt1)}>
                         <Image style = {{width:40,height:40}}
                                source = {icon}/>
                     </TouchableOpacity>
@@ -91,7 +91,7 @@ export default class ItemViewMgr extends Component<Props>{
                 <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
 
                     <TouchableOpacity  style = {{width:50,height:50,
-                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData)}>
+                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData.menuTxt2)}>
                         <Image style = {{width:40,height:40}}
                                source = {ItemData.menuIcon2}/>
                     </TouchableOpacity>
@@ -103,7 +103,7 @@ export default class ItemViewMgr extends Component<Props>{
                 <View style = {[styles.menuItemStyle,{marginRight:0.5,marginLeft:0.5}]}>
 
                     <TouchableOpacity  style = {{width:50,height:50,
-                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData)}>
+                        alignItems: 'center', justifyContent:'center'}} onPress={() => this.onClick(ItemData.menuTxt3)}>
                         <Image style = {{width:40,height:40}}
                                source = {ItemData.menuIcon3}/>
                     </TouchableOpacity>

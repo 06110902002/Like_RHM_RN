@@ -260,8 +260,17 @@ export default class BusinessData extends React.Component{
     };
 
     onClickListener(data){
-        Alert.alert(data.menuTxt1);
-        this.props.navigation.navigate('DisProfits');
+        switch (data){
+
+            case '分润查询':
+                this.props.navigation.navigate('DisProfits');
+                break;
+
+            default:
+                Alert.alert(data);
+                break;
+        }
+
     };
 
     /**

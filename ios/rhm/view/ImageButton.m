@@ -48,6 +48,14 @@
   
 }
 
+
+/**
+ 在这个生命周期处理react传过来的信息
+ */
+- (void)didMoveToWindow{
+  NSLog(@"57---------didMoveToWindowImgUrl:%@",self.imgUrl);
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
