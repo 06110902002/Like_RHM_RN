@@ -17,7 +17,7 @@ var testArray = [];
 
 /**
  * Created by 刘胡来
- * DateUtils on 2019.04.07
+ * Date on 2019.04.07
  * Copyright 2013 - 2019 QianTuo Inc. All Rights Reserved
  * Desc: 首页经营数据页面
  */
@@ -74,7 +74,7 @@ export default class BusinessData extends React.Component{
     initMenuData(){
 
         var txtArr = ['分润查询','交易查询','激活终端查询',
-            '开设下级机构','分润模版管事','终端下发',
+            '开设下级机构','分润模模板管理','终端下发',
             '设置终端费率','分润明细','激活返现管理',
         ];
 
@@ -264,6 +264,10 @@ export default class BusinessData extends React.Component{
 
             case '分润查询':
                 this.props.navigation.navigate('DisProfits');
+                break;
+
+            case '分润模模板管理':
+                this.props.navigation.navigate('DisProfitTempletMgr');
                 break;
 
             default:

@@ -1,9 +1,4 @@
-/**
- * @author YASIN
- * @version [React-Native Pactera V01, 2017/9/5]
- * @date 2017/9/5
- * @description index
- */
+
 import React, {
     Component
 } from 'react';

@@ -35,6 +35,9 @@
                                                                                            CFSTR("!*'();:@&=+$,/?%#[]"),
                                                                                            kCFStringEncodingUTF8));
   //[result autorelease];
+#if !__has_feature(objc_arc)
+  [result autorelease];
+#endif
   return result;
 }
 
@@ -57,6 +60,9 @@
                                                                                            CFSTR("!*'();:@&=+$,/?%#[]"),
                                                                                            enc));
   //[result autorelease];
+#if !__has_feature(objc_arc)
+  [result autorelease];
+#endif
   return result;
 }
 

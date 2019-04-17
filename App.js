@@ -11,6 +11,8 @@ import MainPage from './page/main/MainPage'
 import Mine from "./page/main/Mine";
 import BusinessData from "./page/main/BusinessData";
 import DisProfits from './page/disProfit/DisProfits';
+import DisProfitTempletMgr from './page/profitTmpMgr/DisProfitTempletMgr'
+
 
 var isFirst;
 
@@ -111,6 +113,12 @@ const RootStack = createStackNavigator(
             screen:DisProfits,
             navigationOptions:{
                 title:'利润分配',
+            },
+        },
+        DisProfitTempletMgr:{
+            screen:DisProfitTempletMgr,
+            navigationOptions:{
+                title:'分润模板管理',
             },
         }
 

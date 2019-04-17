@@ -255,7 +255,8 @@ export default class Login extends React.Component {
 
     login() {
         //Alert.alert(this.state.cellPhoneText +":"+this.state.passwardText);
-        //this.props.navigation.navigate('Main');
+        this.props.navigation.navigate('Main');
+        //return;
         let url = 'https://rhbapp.ruiyinxin.com:7024/unifiedAction.json';
         // let param = {
         //     transDate: '20190413',
