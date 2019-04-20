@@ -18,11 +18,14 @@ export default class SlideButton extends React.Component{
     constructor(){
         super();
         this.state = {
-            indexViewMarginLeft:new Animated.Value(20),
+            indexViewMarginLeft:new Animated.Value(0),
             activityTxtColor:'#4394F1',
             inactiveTxtColor:'gray',
             selecIndex:1,
+
         };
+        this.textList = [];
+        this.txtRefList = [];
 
     };
 
@@ -43,35 +46,11 @@ export default class SlideButton extends React.Component{
     };
 
     componentDidMount() {
-        this.state.indexViewMarginLeft.addListener(({value})=> {
-            if(value === 20){
-
-                this.refs.index1.setNativeProps({
-                    style: {
-                        color: this.state.activityTxtColor,
-                    }
-                });
-                this.refs.index2.setNativeProps({
-                    style: {
-                        color: this.state.inactiveTxtColor,
-                    }
-                });
-                this.props.onButtonClick && this.props.onButtonClick(1);
-
-            }else if(value === (screenWidth / 2 + 10)){
-                this.refs.index2.setNativeProps({
-                    style: {
-                        color: this.state.activityTxtColor,
-                    }
-                });
-                this.refs.index1.setNativeProps({
-                    style: {
-                        color: this.state.inactiveTxtColor,
-                    }
-                });
-                this.props.onButtonClick && this.props.onButtonClick(2);
-            }
-        });
+        // this.state.indexViewMarginLeft.addListener(({value})=> {
+        //     if(value === screenWidth / this.txtRefList.length){
+        //         this.props.onButtonClick && this.props.onButtonClick(value);
+        //     }
+        // });
     }
 
     componentWillUnMount() {
@@ -79,37 +58,95 @@ export default class SlideButton extends React.Component{
     }
 
     render(){
+        let{txtArray} = this.props;
+        // txtArray.map(function(value,key){
+        //     console.log('84--------:'+key+" value:"+value);
+        // });
+        // console.log('83----------:'+txtArray.length);
+        // let testView = this.buileTxt(txtArray);
+        // console.log('88----------'+testView);
         return(
             <View style = {{flex:1}}>
 
                 <View style = {{width:'100%',height:60,flexDirection:'row'}}>
-                    <Text style = {[styles.slideButtonStyle,{marginLeft:20,marginRight:10,color:this.state.activityTxtColor,}]}
-                          ref = "index1"
-                          onPress = {() =>this.moveLeftAnim()}>
-                        我的分润模板
-                    </Text>
+                    {/*<Text style = {[styles.slideButtonStyle,*/}
+                        {/*{color:this.state.activityTxtColor,backgroundColor:'#F345F5',}]}*/}
+                          {/*ref = "index1"*/}
+                          {/*onPress = {() =>this.moveLeftAnim()}>*/}
+                        {/*我的分润模板*/}
+                    {/*</Text>*/}
 
-                    <Text style = {[styles.slideButtonStyle,{marginLeft:10,marginRight:20,color:this.state.inactiveTxtColor}]}
-                          ref = "index2"
-                          onPress = {() =>this.moveRightAnim()}>
-                        下级代理分润模板
-                    </Text>
+                    {/*<Text style = {[styles.slideButtonStyle,{*/}
+                        {/*color:this.state.inactiveTxtColor,backgroundColor:'#1235F5',}]}*/}
+                          {/*ref = "index2"*/}
+                          {/*onPress = {() =>this.moveRightAnim()}>*/}
+                        {/*下级代理分润模板*/}
+                    {/*</Text>*/}
+
+                    {this.buileTxt(txtArray)}
+
 
                 </View>
 
                 {/*滚动视图*/}
-                <Animated.View style = {{height:50,width:screenWidth / 2 - 30,
+                <Animated.View pointerEvents={'none'} style = {{height:50,width:screenWidth / txtArray.length,
                     borderWidth:2,borderColor:'#4394F1',
                     borderRadius:22.5,marginTop:-55,marginLeft:this.state.indexViewMarginLeft}}>
 
                 </Animated.View>
 
-
-
             </View>
         )
 
     }
+
+    buileTxt(array){
+
+        for(let i = 0; i < array.length; i ++){
+            let view = <Text style = {[styles.slideButtonStyle,{
+                color:i === 0? this.state.activityTxtColor:this.state.inactiveTxtColor,}]}
+                             ref={ (refName) => {
+                                 this.txtRefList[i] = refName
+                             }}
+                             key={i+"2019"}
+                             onPress = {() =>this.startAnim(i)}>
+                {array[i]}
+            </Text>
+            this.textList.push(view);
+        }
+
+        return this.textList;
+    };
+
+    startAnim(i){
+
+       for(let k = 0 ; k < this.txtRefList.length; k ++){
+            if(k === i){
+                this.txtRefList[i].setNativeProps({
+                    style: {
+                        color: this.state.activityTxtColor
+                    }
+                });
+            }else{
+                this.txtRefList[k].setNativeProps({
+                    style: {
+                        color: this.state.inactiveTxtColor,
+                    }
+                });
+            }
+        }
+
+        Animated.timing(this.state.indexViewMarginLeft, {
+            toValue: i * screenWidth / this.txtRefList.length,
+            duration: 500,
+            easing: Easing.linear
+        }).start(()=>{
+            this.props.onButtonClick && this.props.onButtonClick(i);
+        });
+
+
+
+    };
 }
 
 const styles = StyleSheet.create({
