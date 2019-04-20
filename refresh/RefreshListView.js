@@ -135,7 +135,7 @@ export default class RefreshListView extends Component {
    */
   endRefreshing(footerState: RefreshState) {
     let footerRefreshState = footerState;
-    if (this.props.data.length === 0) {
+    if (!this.props.data || this.props.data.length === 0) {
       footerRefreshState = RefreshState.Idle;
     }
     this.setState({

@@ -66,7 +66,7 @@ export default class SlideButton extends React.Component{
         // let testView = this.buileTxt(txtArray);
         // console.log('88----------'+testView);
         return(
-            <View style = {{flex:1}}>
+            <View style = {{width:'100%',height:60}}>
 
                 <View style = {{width:'100%',height:60,flexDirection:'row'}}>
                     {/*<Text style = {[styles.slideButtonStyle,*/}
@@ -101,7 +101,9 @@ export default class SlideButton extends React.Component{
     }
 
     buileTxt(array){
-
+        if(this.textList.length > 0){   //防止状态更新的时候 页面重绘时多次调用本接口
+            this.textList = [];
+        }
         for(let i = 0; i < array.length; i ++){
             let view = <Text style = {[styles.slideButtonStyle,{
                 color:i === 0? this.state.activityTxtColor:this.state.inactiveTxtColor,}]}

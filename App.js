@@ -118,7 +118,8 @@ const RootStack = createStackNavigator(
         DisProfitTempletMgr:{
             screen:DisProfitTempletMgr,
             navigationOptions:{
-                title:'分润模板管理',
+                //title:'分润模板管理',
+                header: null,
             },
         }
 
