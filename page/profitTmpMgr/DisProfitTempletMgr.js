@@ -40,6 +40,7 @@ export default class DisProfitTempletMgr extends BaseComponent{
             dataArray: this.initMenuData(),
             flatlistHeight:0,
         };
+        this.microHttp = new MicroHttp();
 
     };
 
@@ -98,35 +99,7 @@ export default class DisProfitTempletMgr extends BaseComponent{
     };
 
     componentDidMount() {
-
-        let microHttp = new MicroHttp();
-        var param = microHttp.buildPublicRequestBody();
-        param.application = 'FRTemplateQuery.Req';
-        param.customerId = "63493";
-        param.mobileNo = '18751586817';
-        param.phone = "18751586817";
-        param.branchId = 'RHB89920000'; //需要从别处接口获取到
-
-        RNCallNative.getMd5FromNative(JSON.stringify(param),(newSign) => {
-            param.sign = newSign;
-
-            let parmatTmp = 'requestXml=' + JSON.stringify(param);
-
-            microHttp.postRequest(MicroHttp.jsonUrl, parmatTmp)
-                .then((response) => {
-                    if(response.respCode === '0000'){
-
-                    }else{
-                        Alert.alert(response.respDesc);
-                    }
-
-                    console.log('123----------:' + JSON.stringify(response));
-                    this.parseFRTemplateQuery(response);
-
-                }).catch((error) => {
-                Alert.alert(error);
-            })
-        });
+        this.postFRTemplateQuery();
 
     }
 
@@ -148,6 +121,81 @@ export default class DisProfitTempletMgr extends BaseComponent{
     }
 
     /**
+     * 我的分润模板数据查询
+     */
+    postFRTemplateQuery(){
+        //let microHttp = new MicroHttp();
+        var param = this.microHttp.buildPublicRequestBody();
+        param.application = 'FRTemplateQuery.Req';
+        param.branchId = 'RHB89920000'; //需要从别处接口获取到
+        param.customerId = "63493";
+        param.mobileNo = '18751586817';
+        param.phone = "18751586817";
+
+
+        RNCallNative.getMd5FromNative(JSON.stringify(param),(newSign) => {
+            param.sign = newSign;
+
+            let parmatTmp = 'requestXml=' + JSON.stringify(param);
+
+            this.microHttp.postRequest(MicroHttp.jsonUrl, parmatTmp)
+                .then((response) => {
+                    if(response.respCode === '0000'){
+
+                    }else{
+                        Alert.alert(response.respDesc);
+                    }
+
+                    console.log('123----------:' + JSON.stringify(response));
+                    this.parseFRTemplateQuery(response);
+
+                }).catch((error) => {
+                Alert.alert(error);
+            })
+        });
+    };
+
+    /**
+     * 下级分润查询
+     */
+    postFRBelowBranchQuery(){
+        var param = this.microHttp.buildPublicRequestBody();
+        param.application = 'FRBelowBranchQuery.Req';
+        param.branchId = 'RHB89920000'; //需要从别处接口获取到
+        param.searchType = '0';
+        param.currPage = '1';   //分页数据
+
+
+        param.customerId = "63493";
+        param.mobileNo = '18751586817';
+        param.phone = "18751586817";
+
+
+
+
+        RNCallNative.getMd5FromNative(JSON.stringify(param),(newSign) => {
+            param.sign = newSign;
+
+            let parmatTmp = 'requestXml=' + JSON.stringify(param);
+
+            this.microHttp.postRequest(MicroHttp.jsonUrl, parmatTmp)
+                .then((response) => {
+                    if(response.respCode === '0000'){
+
+                    }else{
+                        Alert.alert(response.respDesc);
+                    }
+
+                    console.log('181----------:' + JSON.stringify(response));
+                    this.parseFRTemplateQuery(response);
+
+                }).catch((error) => {
+                Alert.alert(error);
+            })
+        });
+    };
+
+    /**
      * 构建滑动菜单栏
      * @returns {*}
      */
@@ -165,6 +213,15 @@ export default class DisProfitTempletMgr extends BaseComponent{
 
     onSildeButtonClick(index){
         console.log('98------------onSildeButtonClick:'+index);
+        switch (index){
+            case 0:
+                this.postFRTemplateQuery();
+                break;
+
+            case 1:
+                this.postFRBelowBranchQuery();
+                break;
+        }
     };
 
     /**
