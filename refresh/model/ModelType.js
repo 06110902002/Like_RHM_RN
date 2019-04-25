@@ -10,4 +10,6 @@ export default {
     HomeFuncMenu:'HomeFuncMenu',        //首页功能菜单
     BannarMenu:'BannarMenu',            //bannar 图
 
+    BellowBranchDisProfitTmp:'BBDisProfit',           //下级分润模板类型
+
 }

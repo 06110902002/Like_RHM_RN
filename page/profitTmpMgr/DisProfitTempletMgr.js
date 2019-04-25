@@ -12,6 +12,9 @@ import MenuItem from "../../refresh/model/HomeMenuItemModel";
 import BannarMenuModel from "../../refresh/model/BannarMenuModel";
 import MicroHttp from "../../utils/MicroHttp";
 import DateUtils from "../../utils/DateUtils";
+import SlideMenuBar from'./SlideMenuBar';
+import SubAgentDisProfitTmpModel from './model/SubAgentDisProfitTmpModel';
+import DisProfitTempItemViewMgr from './view/DisProfitTempItemViewMgr';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -27,6 +30,11 @@ export default class DisProfitTempletMgr extends BaseComponent{
 
     constructor(){
         super();
+        this.subAgentArray = [];
+        this.subAgentCurPage = 1;   //下级代理分润当前页面
+        this.isLastPage = false;    //是否是最后一页
+        this.isSubAgentLoading = false;
+        this.isMineLoading = false;
         this.state = {
             activityTxtColor:'#4394F1',
             inactiveTxtColor:'gray',
@@ -35,12 +43,14 @@ export default class DisProfitTempletMgr extends BaseComponent{
                 txtArray:['我的分润模板','下级代理分润模板'],
             },
 
-            isLoading: true,
             noMoreData:false,
             dataArray: this.initMenuData(),
+            subAgentArray:this.subAgentArray,
             flatlistHeight:0,
         };
         this.microHttp = new MicroHttp();
+        this.segmentArray = ['我的分润模板','下级代理分润模板'];
+
 
     };
 
@@ -100,22 +110,10 @@ export default class DisProfitTempletMgr extends BaseComponent{
 
     componentDidMount() {
         this.postFRTemplateQuery();
+        this.postFRBelowBranchQuery(this.subAgentCurPage);
 
     }
 
-    parseFRTemplateQuery(jsonData){
-        if(!jsonData) return;
-        let data = jsonData.data;
-        let resultBean = data.resultBean;
-        let list = resultBean.list;
-        if(!list || JSON.stringify(list).length <= 2){
-            this.setState({
-                dataArray:null,
-            });
-        }else{
-
-        }
-    }
 
     componentWillUnMount() {
     }
@@ -155,23 +153,36 @@ export default class DisProfitTempletMgr extends BaseComponent{
         });
     };
 
+    parseFRTemplateQuery(jsonData){
+        if(!jsonData) return;
+        let data = jsonData.data;
+        let resultBean = data.resultBean;
+        let list = resultBean.list;
+        if(!list || JSON.stringify(list).length <= 2){
+            this.setState({
+                dataArray:null,
+            });
+        }else{
+
+        }
+        this.isMineLoading = false;
+        this.MyDisProfitTempleteListView.endRefreshing(RefreshState.Idle);
+    }
+
     /**
      * 下级分润查询
      */
-    postFRBelowBranchQuery(){
+    postFRBelowBranchQuery(pageIndex){
         var param = this.microHttp.buildPublicRequestBody();
         param.application = 'FRBelowBranchQuery.Req';
         param.branchId = 'RHB89920000'; //需要从别处接口获取到
         param.searchType = '0';
-        param.currPage = '1';   //分页数据
+        param.currPage = pageIndex;   //分页数据
 
 
         param.customerId = "63493";
         param.mobileNo = '18751586817';
         param.phone = "18751586817";
-
-
-
 
         RNCallNative.getMd5FromNative(JSON.stringify(param),(newSign) => {
             param.sign = newSign;
@@ -186,8 +197,8 @@ export default class DisProfitTempletMgr extends BaseComponent{
                         Alert.alert(response.respDesc);
                     }
 
-                    console.log('181----------:' + JSON.stringify(response));
-                    this.parseFRTemplateQuery(response);
+                    console.log('186----------:' + JSON.stringify(response));
+                    this.parseFRBelowBranchQuery(response);
 
                 }).catch((error) => {
                 Alert.alert(error);
@@ -196,56 +207,138 @@ export default class DisProfitTempletMgr extends BaseComponent{
     };
 
     /**
+     * 解析下级分润数据
+     */
+    parseFRBelowBranchQuery(jsonData){
+        if(!jsonData) return;
+        let data = jsonData.data;
+        let resultBean = data.resultBean;
+        let isLast = resultBean.isLast;
+        this.isLastPage = isLast === '1';
+        let list = resultBean.list;
+        console.log('203-----------:',JSON.stringify(list));
+
+        for(let i = 0; i < list.length; i ++){
+            var subModel = new SubAgentDisProfitTmpModel();
+            let tmp = list[i];
+            subModel.activateNum = tmp.activateNum;
+            subModel.branchId = tmp.branchId;
+            subModel.branchName = tmp.branchName;
+            subModel.cashReturnRule = tmp.cashReturnRule;
+            subModel.frAmount = tmp.frAmount;
+            subModel.isdown = tmp.isdown;
+            subModel.payAmount = tmp.payAmount;
+            subModel.superCashReturnRule = tmp.superCashReturnRule;
+            subModel.newSuperCashReturnRule = tmp.newSuperCashReturnRule;
+            subModel.newCashReturnRule = tmp.newCashReturnRule;
+            subModel.status = tmp.status;
+            this.subAgentArray.push(subModel);
+        }
+
+
+        if(!list || JSON.stringify(list).length <= 2){
+            this.setState({
+                subAgentArray:null,
+            });
+        }
+        else{
+            this.setState({
+                subAgentArray:this.subAgentArray,
+            });
+        }
+        this.isSubAgentLoading = false;
+        console.log('247-----------:');
+        this.SubAgentDisprofitListView.endRefreshing(RefreshState.Idle);
+
+    };
+
+    /**
      * 构建滑动菜单栏
      * @returns {*}
      */
     buildSlideButtonView(){
-        // let buttonParmas = {
-        //     txtArray:['我的分润模板','下级代理分润模板'],
-        // };
-        return (
-            <SlideButton
-                {...this.state.slideButtonParmas}
-                onButtonClick={(index)=>this.onSildeButtonClick(index)}
-            />
+        return(
+            <View style = {{flex:1,backgroudColor:'#098900'}}>
+                <SlideMenuBar >
+                    {this.segmentArray.map((item, index)=> {
+                        return this.buidlScrollItemView(item,index);
+                    })}
+                </SlideMenuBar>
+
+            </View>
         );
-    };
 
-    onSildeButtonClick(index){
-        console.log('98------------onSildeButtonClick:'+index);
-        switch (index){
-            case 0:
-                this.postFRTemplateQuery();
-                break;
-
-            case 1:
-                this.postFRBelowBranchQuery();
-                break;
-        }
     };
 
     /**
-     * 构建中间滚动列表数据
-     * @returns {*}
+     * 构建scrolView item视图
+     * @param TopMenuTitleModel
+     * @param index 循环遍历的时候唯一key
      */
-    buildListView(){
+    buidlScrollItemView(item,index){
+        if(item){
+            return (
+                <View style = {styles.scrollVerticalLayout} key={item + index} tabLabel={item}>
+                    {this.buildListView(index)}
+                </View>
+            );
+        }
+        return null;
+    };
+
+
+    buildListView(index){
+        return index === 0 ? this.buildMyDisProfitTempleteListView() : this.buildSubAgentDisprofitListView();
+    };
+
+    /**
+     * 构建我的分润模板
+     */
+    buildMyDisProfitTempleteListView(){
         return(
             <RefreshListView
-                style = {{top:10,}}
-                ref={(ref) => {this.listView = ref}}
+                style = {{top:10,width:'100%'}}
+                ref={(ref) => {this.MyDisProfitTempleteListView = ref}}
                 data={this.state.dataArray}
                 renderItem={this._renderItem.bind(this)}
                 ListEmptyComponent={this._renderEmptyView}
-                onHeaderRefresh={() => { this.pullDownRefresh() }}
-                onFooterRefresh={() => { this.loadMore() }}
+                onHeaderRefresh={() => { this.pullDownRefresh(0) }}
+                onFooterRefresh={() => { this.loadMore(0) }}
                 ItemSeparatorComponent={this.renderSeparator}
-                contentContainerStyle = {{alignItems:'center', justifyContent:'center',}}
+                //contentContainerStyle = {{alignItems:'center', justifyContent:'center',}}
                 onLayout={e => {
                     let height = e.nativeEvent.layout.height;
                     if (this.state.flatlistHeight < height) {
                         this.setState({ flatlistHeight: height })
                     }
                 }}
+            />
+        );
+    };
+
+
+    /**
+     * 构建中间滚动列表数据
+     * @returns {*}
+     */
+    buildSubAgentDisprofitListView(){
+        return(
+            <RefreshListView
+                style = {{top:10,width:'100%'}}
+                ref={(ref) => {this.SubAgentDisprofitListView = ref}}
+                data={this.state.subAgentArray}
+                renderItem={this._renderItem.bind(this)}
+                ListEmptyComponent={this._renderEmptyView}
+                onHeaderRefresh={() => { this.pullDownRefresh(1) }}
+                onFooterRefresh={() => { this.loadMore(1) }}
+                ItemSeparatorComponent={this.renderSeparator}
+                // contentContainerStyle = {{alignItems:'center', justifyContent:'center',}}
+                // onLayout={e => {
+                //     let height = e.nativeEvent.layout.height;
+                //     if (this.state.flatlistHeight < height) {
+                //         this.setState({ flatlistHeight: height })
+                //     }
+                // }}
             />
         );
     };
@@ -265,23 +358,43 @@ export default class DisProfitTempletMgr extends BaseComponent{
 
     /**
      * 下拉刷新的回调
+     * @param type 0 ： 下拉刷新我的分润模板数据
+     *        type 1:   下拉刷新下级代理分润模板数据
      */
-    pullDownRefresh(){
-        this.setState({
-            isLoading: true,
-        },()=>{
+    pullDownRefresh(type){
+        if(type === 1){
+            this.subAgentArray = [];
+            // this.setState({
+            //     subAgentArray:null,
+            // });
+            this.subAgentCurPage = 1;
+            if(this.isSubAgentLoading) return;
+            this.isSubAgentLoading = true;
+            this.postFRBelowBranchQuery(this.subAgentCurPage);
 
-            setTimeout(() => {
-                this.listView.endRefreshing(RefreshState.Idle);
-                console.log('226-----------:下拉刷新');
-            }, 2000)
+        }else{
+            this.setState({
+                dataArray:null,
+            });
+            if(this.isMineLoading) return;
+            this.isMineLoading = true;
+            this.postFRTemplateQuery();
+        }
 
-        });
-    }
+    };
+
+    /**
+     * 上拉加载更多的回调
+     * @param type 0 ： 上拉加载我的分润模板数据
+     *        type 1:   上拉加载下级代理分润模板数据
+     */
+    loadMore(type){
+
+    };
 
     _renderItem= (data)=> {
         return (
-            <ItemViewMgr
+            <DisProfitTempItemViewMgr
                 itemType = {data.item.getItemType()}
                 ItemData = {data.item}      //属性传值
                 onItemClickListener = {(data) =>this.onClickListener(data)}
@@ -293,20 +406,33 @@ export default class DisProfitTempletMgr extends BaseComponent{
 
     render(){
         return(
-            <View style = {{flex:1}}>
+            <View style = {{flex:1,backgroundColor:'#F5F5F9'}}>
 
                 {this.setStatusBar('#1373EC')}
 
                 {this.buildTopNavigationBar('分润模板管理','#1373EC')}
 
                 {this.buildSlideButtonView()}
+                {/*{this.testItemView()}*/}
 
-                {this.buildListView()}
 
             </View>
         )
 
     }
+
+    testItemView(){
+        return(
+            <View style = {{height:40,flexDirection:'row',justifyContent:'space-between',alignItems:'center',}}>
+                <Text style = {{marginLeft:10}}>二级</Text>
+                <View style = {{flex:1}}/>
+                <Text style = {{marginRight:20}}>二级</Text>
+                <Image style = {{width:10,height:20,resizeMode:'contain',marginRight:10}}
+                       source = {require('../../images/right_arrow.png')}/>
+            </View>
+        );
+    };
+
 
     /**
      * @override 父类 导航条右边按钮的点击
@@ -331,6 +457,30 @@ const styles = StyleSheet.create({
         lineHeight:60,
         textAlign:'center',
         alignItems:'center',
+    },
+
+
+
+    topTitleTxtStyle:{
+        //flex:1,
+        color:'white',
+        //textAlign:'center',
+        height:40,
+        //backgroundColor:'#8b3e67',
+        //alignItems:'center',    //垂直居中
+        alignItems:'center',
+        justifyContent: 'center',
+        //position:'absolute'
+    },
+
+    scrollVerticalLayout:{
+        width: screenWidth,
+        //top:40,
+        //height:200,
+        flexDirection:'column',
+        alignItems:'center',    //垂直居中
+        justifyContent:'center',
+       // backgroundColor:'#123e67',
     },
 
 

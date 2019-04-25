@@ -28,7 +28,10 @@ export default class DefaultTabBar extends Component {
     // 构造
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            activityTxtColor:'white',
+            inactiveTxtColor:'white',
+        };
     }
 
     render() {
@@ -73,12 +76,12 @@ export default class DefaultTabBar extends Component {
         //如果被选中的style
         if (isTabActive) {
             tabTextStyle = {
-                color: 'white',
+                color: this.state.activityTxtColor,
                 fontSize:14,
             };
         } else {
             tabTextStyle = {
-                color: 'white',
+                color: this.state.inactiveTxtColor,
                 fontSize:12
             };
         }
