@@ -6,6 +6,7 @@ import {Button, View, Text, StyleSheet,Dimensions,
     TouchableOpacity} from 'react-native';
 import BaseComponent from "../BaseComponent";
 import Wedge from '../../uikit/art/Wedge';
+import CircularChart from '../../uikit/art/CircularChart';
 
 const {Surface, Shape, Path} = ART;
 
@@ -53,10 +54,16 @@ export default class TradeQuery extends BaseComponent{
         this.testArray.push(item2);
 
         var item3 = new CircleItem();
-        item3.ratio = 300;
-        item3.degress = 300.0 / 600.0 * 360.0;
+        item3.ratio = 200;
+        item3.degress = 200.0 / 600.0 * 360.0;
         item3.color = 'gray';
         this.testArray.push(item3);
+
+        var item4 = new CircleItem();
+        item4.ratio = 100;
+        item4.degress = 100.0 / 600.0 * 360.0;
+        item4.color = 'white';
+        this.testArray.push(item4);
 
 
 
@@ -70,98 +77,26 @@ export default class TradeQuery extends BaseComponent{
 
                 {this.setStatusBar('#1373EC')}
                 {this.buildTopNavigationBar('交易查询','#1373EC')}
-
-                <Surface width={300} height={300} style={{backgroundColor: 'yellow', marginTop: 10}}>
-                    <Wedge
-                        outerRadius={100}
-                        innerRadius={90}
-                        startAngle={0}
-                        endAngle={45}
-                        originX={150 + 100 * Math.cos(this.degress2Radians(90))}
-                        originY={150 - 100 * Math.sin(this.degress2Radians(90))}
-                        fill="purple" />
-
-                    {/*/!*<Wedge*!/*/}
-                        {/*/!*outerRadius={100}*!/*/}
-                        {/*/!*innerRadius={90}*!/*/}
-                        {/*/!*startAngle={180}*!/*/}
-                        {/*/!*endAngle={360}*!/*/}
-                        {/*/!*originX={150}*!/*/}
-                        {/*/!*originY={250}       //左半边圆*!/*/}
-                        {/*/!*fill="purple" />*!/*/}
-
-                    <Wedge
-                        outerRadius={100}
-                        innerRadius={90}
-                        startAngle={45}
-                        endAngle={135}
-                        originX={150 +  100 * Math.sin(this.degress2Radians(45))}
-                        originY={150 - 100 * Math.cos(this.degress2Radians(45))}
-                        fill="green" />
-
-                    <Wedge
-                        outerRadius={100}
-                        innerRadius={90}
-                        startAngle={135}
-                        endAngle={270}
-                        originX={150 +  100 * Math.sin(this.degress2Radians(135))}
-                        originY={150 - 100 * Math.cos(this.degress2Radians(135))}
-                        fill="gray" />
-
-
-
-                    {/*{ this.testArray.map((name, i) => {*/}
-                        {/*let posx = i === 0? 90 : this.testArray[i].degress;*/}
-                        {/*return (*/}
-                            {/*<Wedge key={i}*/}
-                                {/*outerRadius={100}*/}
-                                {/*innerRadius={90}*/}
-                                {/*startAngle={i === 0 ?  90: this.testArray[i - 1].degress}*/}
-                                {/*endAngle={ i === 0 ? name.degress : this.testArray[i - 1].degress + this.testArray[i].degress}*/}
-                                {/*originX={150 + 100 * Math.cos(this.degress2Radians(posx))}*/}
-                                {/*originY={150 - 100 * Math.sin(this.degress2Radians(posx))}*/}
-                                {/*fill={this.testArray[i].color} />*/}
-                        {/*);*/}
-                    {/*})}*/}
-
-
-
-                </Surface>
-
-
+                {this.buildCircleChart()}
 
             </View>
         )
 
     }
 
-    buildCircleMap(dataArray){
-
-        // for(let i = 0; i < dataArray.length; i ++){
-        //     return (
-        //         <Wedge
-        //             outerRadius={100}
-        //             innerRadius={90}
-        //             startAngle={i === 0 ?  0: dataArray[i - 1].degress}
-        //             endAngle={dataArray[i].degress}
-        //             originX={150 +  100 * Math.cos(this.degress2Radians( i === 0? 90 : dataArray[i].degress))}
-        //             originY={150 - 100 * Math.sin(this.degress2Radians(i === 0? 90 :dataArray[i].degress))}
-        //             fill={dataArray[i].color} />
-        //     );
-        // }
-
-        { dataArray.map((name, i) => {
-            return (
-                <Wedge
-                    outerRadius={100}
-                    innerRadius={90}
-                    startAngle={i === 0 ?  0: dataArray[i - 1].degress}
-                    endAngle={name.degress}
-                    originX={150 + 100 * Math.cos(this.degress2Radians( i === 0? 90 : dataArray[i].degress))}
-                    originY={150 - 100 * Math.sin(this.degress2Radians(i === 0? 90 :dataArray[i].degress))}
-                    fill={dataArray[i].color} />
-            );
-        })}
+    buildCircleChart(){
+        let tabParams = {
+            itemArray:this.testArray,
+            chartWidth: this.screenWidth,
+            chartHeight: 300,
+            outerRadius: 100,
+            innerRadius: 80,
+        };
+        return (
+            <CircularChart
+                {...tabParams}
+            />
+        );
 
     };
 
