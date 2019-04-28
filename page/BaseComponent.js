@@ -14,6 +14,13 @@ import {Alert} from 'react-native'
  */
 export default class BaseComponent extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.screenWidth = Dimensions.get('window').width;
+        this.screenHeight = Dimensions.get('window').height;
+
+    };
+
 
     render() {
         return this.initView();

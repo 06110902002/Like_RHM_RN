@@ -10,6 +10,7 @@ import RefreshState from  '../../refresh/RefreshState';
 import ItemViewMgr from '../../refresh/view/ItemViewMgr';
 import BannarMenuModel from '../../refresh/model/BannarMenuModel';
 import ModelType from '../../refresh/model/ModelType';
+import TradeQuery from "../tradeQuery/TradeQuery";
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -268,6 +269,10 @@ export default class BusinessData extends React.Component{
 
             case '分润模模板管理':
                 this.props.navigation.navigate('DisProfitTempletMgr');
+                break;
+
+            case '交易查询':
+                this.props.navigation.navigate('TradeQuery');
                 break;
 
             default:

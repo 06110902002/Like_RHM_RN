@@ -256,7 +256,7 @@ export default class Login extends React.Component {
     login() {
         //Alert.alert(this.state.cellPhoneText +":"+this.state.passwardText);
         this.props.navigation.navigate('Main');
-        //return;
+        return;
         let url = 'https://rhbapp.ruiyinxin.com:7024/unifiedAction.json';
         // let param = {
         //     transDate: '20190413',
@@ -305,7 +305,7 @@ export default class Login extends React.Component {
                         Alert.alert(response.respDesc);
                     }
 
-                    console.log('300----------:' + response.respDesc+" ："+response.respCode);
+                    console.log('300----------:' + JSON.stringify(response));
 
                 }).catch((error) => {
                 Alert.alert(error);

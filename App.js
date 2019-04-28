@@ -12,7 +12,7 @@ import Mine from "./page/main/Mine";
 import BusinessData from "./page/main/BusinessData";
 import DisProfits from './page/disProfit/DisProfits';
 import DisProfitTempletMgr from './page/profitTmpMgr/DisProfitTempletMgr'
-
+import TradeQuery from './page/tradeQuery/TradeQuery';
 
 var isFirst;
 
@@ -121,7 +121,13 @@ const RootStack = createStackNavigator(
                 //title:'分润模板管理',
                 header: null,
             },
-        }
+        },
+        TradeQuery:{    //交易查询
+            screen:TradeQuery,
+            navigationOptions:{
+                header: null,
+            },
+        },
 
     },
     {

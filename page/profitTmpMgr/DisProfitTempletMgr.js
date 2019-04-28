@@ -109,8 +109,8 @@ export default class DisProfitTempletMgr extends BaseComponent{
     };
 
     componentDidMount() {
-        this.postFRTemplateQuery();
-        this.postFRBelowBranchQuery(this.subAgentCurPage);
+        //this.postFRTemplateQuery();
+        //this.postFRBelowBranchQuery(this.subAgentCurPage);
 
     }
 
