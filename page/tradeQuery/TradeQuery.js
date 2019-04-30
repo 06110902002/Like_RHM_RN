@@ -1,6 +1,6 @@
 
 import React from "react";
-import {Button, View, Text, StyleSheet,Dimensions,
+import {Button, View, Text, StyleSheet,ScrollView,
     Image,TextInput,ListView,Alert,Animated,ART,
     Easing,StatusBar,NativeModules,
     TouchableOpacity} from 'react-native';
@@ -79,6 +79,29 @@ export default class TradeQuery extends BaseComponent{
                 {this.buildTopNavigationBar('交易查询','#1373EC')}
                 {this.buildCircleChart()}
 
+                <ScrollView
+                    onScroll={this._onScroll}
+                    onScrollBeginDrag={this._onScrollBeginDrag}
+                    onScrollEndDrag={this._onScrollEndDrag}
+                    scrollEventThrottle={16}    //设置16，一帧回调一次这个onScroll方法
+                >
+                    <Text style={{height: 30, backgroundColor: 'pink'}}>--------1111111---------</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
+
+                </ScrollView>
+
             </View>
         )
 
@@ -100,26 +123,51 @@ export default class TradeQuery extends BaseComponent{
 
     };
 
-    /**
-     * 角度转弧度
-     * @param angle
-     * @returns {number}
-     */
-    degress2Radians(angle){
 
-        return angle / 180.0 * 3.1415926;
+    /**
+     * 滑动开始回调事件
+     *
+     * 注意：当刚刚开始滑动时，event.nativeEvent.contentOffset.y仍然是上次滑动的值，没有变化
+     *
+     * @param event
+     * @private
+     */
+    _onScrollBeginDrag = (event) => {
+        //event.nativeEvent.contentOffset.y表示Y轴滚动的偏移量
+        const offsetY = event.nativeEvent.contentOffset.y;
+        //记录ScrollView开始滚动的Y轴偏移量
+        this.scrollViewStartOffsetY = offsetY;
     };
 
     /**
-     * 值转角度
-     * @param value
-     * @returns {number}
+     * ScrollView滑动回调事件
+     * @param event
+     * @private
      */
-    value2Degress(value){
+    _onScroll = (event) => {
 
-        return value / 360.0;
+        const offsetY = event.nativeEvent.contentOffset.y;
+        if (this.scrollViewStartOffsetY > offsetY) {
+
+            console.log('152-------手势往下滑动');
+
+        } else if (this.scrollViewStartOffsetY < offsetY) {
+
+            console.log('159----------手势往上滑动');
+
+        }
     };
 
+
+    /**
+     * 滑动停止回调事件
+     * @param event
+     * @private
+     */
+    _onScrollEndDrag = (event) => {
+        console.log('168---------_onScrollEndDrag');
+        //console.log('Y=' + event.nativeEvent.contentOffset.y);
+    };
 
 
 

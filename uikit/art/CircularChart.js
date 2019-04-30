@@ -39,7 +39,7 @@ export default class CircularChart extends Component {
         return (
             <View style={{flex: 1, backgroundColor: '#F5F5F9'}}>
 
-                <Surface width={chartWidth} height={chartHeight} style={{backgroundColor: 'yellow', marginTop: 10}}>
+                <Surface width={chartWidth} height={chartHeight}>
 
 
                     {itemArray.map((name, i) => {
