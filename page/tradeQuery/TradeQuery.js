@@ -7,6 +7,7 @@ import {Button, View, Text, StyleSheet,ScrollView,
 import BaseComponent from "../BaseComponent";
 import Wedge from '../../uikit/art/Wedge';
 import CircularChart from '../../uikit/art/CircularChart';
+import AndroidTextView from '../../uikit/nativeComponent/AndroidTextView'
 
 const {Surface, Shape, Path} = ART;
 
@@ -77,30 +78,31 @@ export default class TradeQuery extends BaseComponent{
 
                 {this.setStatusBar('#1373EC')}
                 {this.buildTopNavigationBar('交易查询','#1373EC')}
-                {this.buildCircleChart()}
+                {/*{this.buildCircleChart()}*/}
 
-                <ScrollView
-                    onScroll={this._onScroll}
-                    onScrollBeginDrag={this._onScrollBeginDrag}
-                    onScrollEndDrag={this._onScrollEndDrag}
-                    scrollEventThrottle={16}    //设置16，一帧回调一次这个onScroll方法
-                >
-                    <Text style={{height: 30, backgroundColor: 'pink'}}>--------1111111---------</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
-                    <Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>
 
-                </ScrollView>
+                {/*<ScrollView*/}
+                    {/*onScroll={this._onScroll}*/}
+                    {/*onScrollBeginDrag={this._onScrollBeginDrag}*/}
+                    {/*onScrollEndDrag={this._onScrollEndDrag}*/}
+                    {/*scrollEventThrottle={16}    //设置16，一帧回调一次这个onScroll方法*/}
+                {/*>*/}
+                    {/*<Text style={{height: 30, backgroundColor: 'pink'}}>--------1111111---------</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+                    {/*<Text style={{height: 100, backgroundColor: 'pink'}}>11111111</Text>*/}
+
+                {/*</ScrollView>*/}
 
             </View>
         )

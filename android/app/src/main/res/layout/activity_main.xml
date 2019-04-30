@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+         />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/next_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="next_state"/>
+
+        <Button
+            android:id="@+id/pre_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pre_state"/>
+
+        <Button
+            android:id="@+id/cur_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cur_state"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="83dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+        android:id="@+id/QueenMiniStack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2个队列模拟栈" />
+
+        <Button
+            android:id="@+id/stackMiniQueen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2个栈模拟队列" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="152dp">
+
+        <Button
+            android:id="@+id/goB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="去b页面" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

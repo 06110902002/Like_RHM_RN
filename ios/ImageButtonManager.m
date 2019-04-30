@@ -29,7 +29,7 @@ RCT_EXPORT_VIEW_PROPERTY(onSingleTap, RCTBubblingEventBlock);
 
 - (void)tabAction{
   //响应react 的点击事件
-  self.photoView.onSingleTap(@{@"showBottom":@"0"});
+  self.photoView.onSingleTap(@{@"showBottom":@"信息来自ios"});
 }
 
 - (void)showToastAction{

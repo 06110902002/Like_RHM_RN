@@ -40,6 +40,12 @@
   
 }
 
+
+/**
+ 对应react 的属性直接改写的setrv函数即可
+
+ @param imgUrl react传进来的属性值
+ */
 -(void)setImgUrl:(NSString *)imgUrl{
   
   _imgUrl = imgUrl;
