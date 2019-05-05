@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Button, View, Text, StyleSheet,
     Image, TextInput, ListView, ScrollView, Dimensions, StatusBar,
-    TouchableOpacity,
+    TouchableOpacity, AsyncStorage,
 } from 'react-native';
 import {Alert} from 'react-native'
 
@@ -52,12 +52,12 @@ export default class BaseComponent extends React.Component {
 
     buildTopNavigationBar(title,bgColor){
         return(
-            <View style = {{height:80, backgroundColor:bgColor,flexDirection:'column',}}>
+            <View style = {{height:80, backgroundColor:bgColor,flexDirection:'column',width:'100%'}}>
 
-                <View style = {[styles.container,{backgroudColor:bgColor}]}>
+                <View style = {[styles.topNavStyle,{backgroudColor:bgColor}]}>
 
                     <TouchableOpacity style = {styles.leftButtonStyle} onPress = {()=>this.back()}>
-                        <Image style = {{width:20,height:20,marginLeft:10}}
+                        <Image style = {{width:20,height:20,marginLeft:10,}}
                                source = {require('../page/main/img/back_white.png')}/>
                         <Text style={{color:'white',fontSize:14}}>返回</Text>
 
@@ -103,7 +103,7 @@ export default class BaseComponent extends React.Component {
 
 const styles = StyleSheet.create({
 
-    container: {
+    topNavStyle: {
         height:50,
         marginTop:30,
         width:'100%',
@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
         height:50,
         flexDirection:'row',
         alignItems:'center',
-        justifyContent:'center',
-
+        justifyContent:'flex-start',
+        //backgroundColor:'#b78900',
 
     },
     rightButtonStyle:{

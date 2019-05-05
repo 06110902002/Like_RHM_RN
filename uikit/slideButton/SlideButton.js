@@ -53,7 +53,7 @@ export default class SlideButton extends React.Component{
         // });
     }
 
-    componentWillUnMount() {
+    componentWillUnmount() {
         this.state.indexViewMarginLeft.removeAllListeners();
     }
 

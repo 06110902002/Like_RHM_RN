@@ -37,7 +37,7 @@ export default class CircularChart extends Component {
     render() {
         let {chartWidth, chartHeight, outerRadius,innerRadius,itemArray}=this.props;
         return (
-            <View style={{flex: 1, backgroundColor: '#F5F5F9'}}>
+            <View style={{flex: 1, backgroundColor: 'white'}}>
 
                 <Surface width={chartWidth} height={chartHeight}>
 

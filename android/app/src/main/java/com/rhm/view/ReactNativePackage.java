@@ -33,6 +33,7 @@ public class ReactNativePackage implements ReactPackage {
         List<ViewManager> views = new ArrayList<>();
         views.add(new TextViewManager());
         views.add(new ImageButtonManager());
+        views.add(new PullRefreshManager());
         return views;
     }
 
